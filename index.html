@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +19,7 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="./styles/forms.css">
+    <link rel="stylesheet" href="./styles/reset.css">
     <link rel="stylesheet" href="./styles/global.css">
     <link rel="stylesheet" href="./styles/variables.css">
     <link rel="stylesheet" href="./styles/splash_screen.css">
@@ -26,45 +28,17 @@
 
 <body>
 
-    <!-- Loading Screen
+    <!-- Loading Screen-->
     <div id="splash-screen">
         <div id="container-logo">
             <img src="./assets/images/logo_splash.svg" alt="Logo do Sistema Rótus" id="logo-splash">
         </div>
-    </div> -->
+    </div>
 
-
-    <!-- Login Screen -->
-
-    <section>
-        <div class="logo-container">
-            <img src="./assets/images/logo.svg" alt="Logo do Sistema Rótus" id="logo">
-            <h1 class="logo-h1">Rótus</h1>
-        </div>
-        <form class="login form">
-            <h1>
-                Entre na sua conta
-            </h1>
-            <div>
-                <label class="input-form">
-                    E-mail
-                    <input type="email" placeholder="Digite seu e-mail...">
-                </label>
-                <label class="input-form">
-                    Senha
-                    <input type="password" placeholder="Digite sua senha...">
-                </label>
-            </div>
-            <div>
-                <label>
-                    <input type="checkbox" name="remember" id="">
-                    Relembrar-me
-                </label>
-                <a href="#" id="forgot-password">Esqueceu sua senha?</a>
-            </div>
-        </form>
-    </section>
-
+    <script src="./js/main.js">
+    </script>
+    <script src="./js/form.js">
+    </script>
 </body>
 
 </html>

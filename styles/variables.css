@@ -1,3 +1,11 @@
 :root {
     --primary-color: #3EA896;
+    --text-color: #444444;
+    --white: #fff;
+    --gray: #AAAAAA;
+
+    --primary-color-lighter: #47c0ac;
+
+    --primary-color-hover: #2e7c6f;
+    --primary-color-lighter-hover: #47c0ac;
 }

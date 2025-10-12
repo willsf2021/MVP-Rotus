@@ -1,0 +1,21 @@
+#splash-screen {
+    background: url('../assets/images/bg_mobile.svg'), var(--primary-color);
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+#logo-splash {
+  animation: fadeInOut 2s ease-in-out infinite;
+}

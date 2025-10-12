@@ -51,9 +51,9 @@ function redirectTo(alertContainerEl, page) {
     setTimeout(() => {
         alertContainerEl.classList.remove('hidden')
         if (page == 'login') {
-            window.location.href = "/home.html";
+            window.location.href = "/MVP-Rotus/home.html";
         } else if (page = 'register') {
-            window.location.href = "/login.html";
+            window.location.href = "/MVP-Rotus/login.html";
         }
     }, 3000)
 }

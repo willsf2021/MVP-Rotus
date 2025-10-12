@@ -4,3 +4,26 @@
     box-sizing: border-box;
 }
 
+body {
+    font-family: 'Inter';
+}
+
+/* Logo */
+
+.logo-container {
+    display: flex;
+    gap: 0px 8px;
+    height: fit-content;
+    align-items: center;
+}
+
+.logo-container img {
+    height: 20px;
+}
+
+.logo-h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    color: var(--primary-color);
+    line-height: 0%;
+}

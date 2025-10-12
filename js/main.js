@@ -3,7 +3,6 @@ const slider = document.querySelector('.slider');
 const documentSection = document.querySelector(".document");
 const clientSection = document.querySelector(".client");
 
-// Inicializa a aba 'documents' visível ao carregar
 window.addEventListener('DOMContentLoaded', () => {
     const defaultBtn = document.querySelector('.option[data-value="documents"]');
     if (defaultBtn) switchContainer(defaultBtn, 0);

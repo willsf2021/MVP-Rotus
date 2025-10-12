@@ -62,6 +62,10 @@ header i {
     display: none;
 }
 
+.logout-a {
+    all: unset
+}
+
 .search-container {
     display: flex;
     align-items: center;

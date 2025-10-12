@@ -20,16 +20,64 @@
     <link rel="stylesheet" href="./styles/reset.css">
     <link rel="stylesheet" href="./styles/global.css">
     <link rel="stylesheet" href="./styles/variables.css">
+    <link rel="stylesheet" href="./styles/home.css">
     <title>Entrar | Rótus</title>
 </head>
 
 <body>
 
-    <h1>
-        Home Page
-    </h1>
+    <header>
+        <div class="avatar-container">
+            <i class="bi bi-person-circle"></i>
+        </div>
+        <div id="greeting-message">
+            <p>Olá, <strong>Luciana Lima</strong>, Seja bem-vinda!</p>
+            <small id="now-date">
+            </small>
+        </div>
+        <div class="logout-container">
+            <i class="bi bi-box-arrow-left"></i>
+        </div>
+    </header>
+    <section id="main-section">
 
-    <script src="./js/form.js">
+        <div class="search-container">
+            <i class="bi bi-search"></i>
+            <input type="text" placeholder="Buscar...">
+        </div>
+        <div class="document">
+            <div id="center-section">
+                Clique aqui para <span class="create-document">" Criar novo documento"</span> e aproveite o melhor do
+                sistema!</p>
+            </div>
+            <button class="create-document button">
+                <div>
+                    <i class="bi bi-file-plus-fill"></i>
+                </div>
+            </button>
+        </div>
+        <div class="client">
+            <div id="center-section">
+                Clique aqui para <span class="create-client">"Adicionar novo Cliente"</span> e aproveite o melhor do
+                sistema!</p>
+            </div>
+            <button class="create-document button">
+                <div>
+                    <i class="bi bi-person-fill-add"></i>
+                </div>
+            </button>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="slider"></div>
+                <button class="option active" data-value="documents">Documentos</button>
+                <button class="option" data-value="clients">Clientes</button>
+            </div>
+        </div>
+
+    </section>
+
+    <script src="./js/main.js">
     </script>
 </body>
 

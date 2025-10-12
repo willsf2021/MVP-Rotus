@@ -19,8 +19,11 @@ submitButton.addEventListener('click', (e) => {
 function submitForm(e) {
 
     page = e.target.dataset.page;
+    if (page == 'recovery' || page == 'alter') {
+        return;
+    }
 
-    let alertHeading = page == 'login' ? 'Validado' : 'Cadastrado'
+    let alertHeading = page == 'login' ? 'Validado!' : 'Cadastrado!'
     let alertMessage = page == 'login' ? 'Redirecionando para página segura...' : 'Redirecionando para página de autenticação...';
 
     let section = document.querySelector('.section-form');
@@ -52,5 +55,5 @@ function redirectTo(alertContainerEl, page) {
         } else if (page = 'register') {
             window.location.href = "/login.html";
         }
-    }, 5000)
+    }, 3000)
 }

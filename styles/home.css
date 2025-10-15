@@ -1,154 +1,158 @@
 body {
-    background: url('../assets/images/bg_mobile.svg'), var(--primary-color);
-    height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  background: url("../assets/images/bg_mobile.svg"), var(--primary-color);
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: hidden;
 }
 
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 64px 24px 24px 24px;
-    color: var(--white);
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 64px 24px 24px 24px;
+  color: var(--white);
+  width: 100%;
 }
 
+.avatar-container {
+    padding-right: 8px;
+}
 .avatar-container i {
-    font-size: 50px;
+  font-size: 50px;
 }
 
 #center-section {
-    flex: 1;
-    height: 100%;
-    display: block;
-    place-content: center;
+  flex: 1;
+  height: 100%;
+  display: block;
+  place-content: center;
 }
 
 #greeting-message {
-    padding-right: 32px;
-    font-size: 14px;
+  padding-right: 32px;
+  font-size: 14px;
 }
 
 #center-section {
-    text-align: center;
+  text-align: center;
 }
 
 #center-section span {
-    cursor: pointer;
-    color: var(--primary-color);
-    font-weight: 600;
+  cursor: pointer;
+  color: var(--primary-color);
+  font-weight: 600;
 }
 
 header i {
-    font-size: 32px;
+  font-size: 32px;
 }
 
 #main-section {
-    width: auto;
-    height: 90%;
-    background-color: var(--white);
-    border-radius: 24px 24px 0px 0px;
-    display: flex;
-    flex-direction: column;
-    padding: 24px 24px;
+  bottom: 0;
+  width: auto;
+  flex: 1;
+  background-color: var(--white);
+  border-radius: 24px 24px 0px 0px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 24px;
 }
 
 .document,
 .client {
-    position: relative;
-    flex: 1;
-    display: none;
+  position: relative;
+  flex: 1;
+  display: none;
 }
 
 .logout-a {
-    all: unset
+  all: unset;
 }
 
 .search-container {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    max-width: 600px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 24px;
-    padding-left: 12px;
-    height: 48px;
-    box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 24px;
+  padding-left: 12px;
+  height: 48px;
+  box-sizing: border-box;
 }
 
 .search-container i {
-    color: #aaa;
-    margin-right: 8px;
-    font-size: 1.2rem;
+  color: #aaa;
+  margin-right: 8px;
+  font-size: 1.2rem;
 }
 
 .search-container input {
-    border: none;
-    outline: none;
-    width: 100%;
-    font-size: 1rem;
-    background-color: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 1rem;
+  background-color: transparent;
 }
-
 
 .create-document.button,
 .create-client.button {
-    font-size: 24px;
-    color: var(--gray-button);
-    border-radius: 50%;
-    position: absolute;
-    width: 48px;
-    height: 48px;
-    border: 1px solid var(--gray-button);
-    background-color: transparent;
-    bottom: 48px;
-    right: 0;
-    z-index: 999;
+  font-size: 24px;
+  color: var(--gray-button);
+  border-radius: 50%;
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--gray-button);
+  background-color: transparent;
+  bottom: 48px;
+  right: 0;
+  z-index: 999;
 }
 
 .toggle-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .toggle {
-    position: relative;
-    display: flex;
-    min-height: 56px;
-    background-color: #44a89e;
-    border-radius: 999px;
-    overflow: hidden;
-    width: 100%;
-    padding: 6px;
+  position: relative;
+  display: flex;
+  min-height: 56px;
+  background-color: #44a89e;
+  border-radius: 999px;
+  overflow: hidden;
+  width: 100%;
+  padding: 6px;
 }
 
 .option {
-    flex: 1;
-    border: none;
-    background: none;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    z-index: 2;
-    transition: color 0.3s;
-    font-size: 16px;
+  flex: 1;
+  border: none;
+  background: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.3s;
+  font-size: 16px;
 }
 
 .option.active {
-    color: #44a89e;
+  color: #44a89e;
 }
 
 .slider {
-    position: absolute;
-    top: 4px;
-    width: calc(50% - 6px);
-    height: calc(100% - 8px);
-    background-color: white;
-    border-radius: 999px;
-    transition: transform 0.3s ease;
-    z-index: 1;
+  position: absolute;
+  top: 4px;
+  width: calc(50% - 6px);
+  height: calc(100% - 8px);
+  background-color: white;
+  border-radius: 999px;
+  transition: transform 0.3s ease;
+  z-index: 1;
 }

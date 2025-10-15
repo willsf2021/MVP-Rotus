@@ -1,5 +1,6 @@
 body {
-  background: url("../assets/images/bg_mobile.svg"), var(--primary-color);
+  background: var(--white);
+  background-position: cover;
   height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -8,6 +9,7 @@ body {
 }
 
 header {
+    background: url("../assets/images/bg_mobile.svg"), var(--primary-color);
   display: flex;
   justify-content: space-between;
   align-items: center;

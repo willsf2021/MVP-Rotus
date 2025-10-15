@@ -1,5 +1,5 @@
 body {
-  background: var(--white);
+  background: transparent;
   background-position: cover;
   height: 100dvh;
   display: flex;
@@ -9,7 +9,7 @@ body {
 }
 
 header {
-    background: url("../assets/images/bg_mobile.svg"), var(--primary-color);
+  background: url("../assets/images/bg_mobile.svg"), var(--primary-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,7 +19,7 @@ header {
 }
 
 .avatar-container {
-    padding-right: 8px;
+  padding-right: 8px;
 }
 .avatar-container i {
   font-size: 50px;

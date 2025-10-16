@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="./styles/reset.css">
     <link rel="stylesheet" href="./styles/global.css">
     <link rel="stylesheet" href="./styles/variables.css">
-    <link rel="stylesheet" href="./styles/new_receita.css">
+    <link rel="stylesheet" href="./styles/document.css">
 
     <title>Nova Receita | Rótus</title>
 
@@ -29,7 +29,7 @@
 
 <body>
     <!-- Mobile -->
-    <nav class="container-steps">
+    <header class="container-steps">
         <ul>
             <li class="steps-item-container">
                 <div class="span-container">
@@ -68,62 +68,63 @@
                 </p>
             </li>
         </ul>
-    </nav>
+    </header>
 
-    <section class="section-step section-active section-step-1">
-        <h1>
-            Step 1 - Cliente
-        </h1>
-
-        <div class="container">
-            <div class="switch-wrapper">
-                <span class="switch-label">Modo Cadastro</span>
-                <label class="switch">
-                    <input type="checkbox" id="toggleMode">
-                    <span class="slider"></span>
-                </label>
+    <main>
+        <section class="section-step section-active section-step-1">
+            <h3>
+                Cliente
+            </h3>
+            <div class="container">
+                <div class="switch-wrapper">
+                    <span class="switch-label"><i class="bi bi-person-fill-check"></i>Modo Cadastro</span>
+                    <label class="switch">
+                        <input type="checkbox" id="toggleMode">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="input-area" id="inputArea">
+                    <label class="input-form">
+                        <span>Cliente <small>(Opcional)</small></span>
+                        <input type="text" placeholder="Digite o nome do cliente...">
+                    </label>
+                </div>
             </div>
-
-            <div class="input-area" id="inputArea">
-                <label>
-                    Buscar Cliente <small>(Opcional)</small>
-                    <input type="search" placeholder="Digite o nome do cliente">
-                </label>
-            </div>
-        </div>
-
-    </section>
-
-    <section class="section-step">
-        <h1>
-            Step 2 - Receita
-        </h1>
-    </section>
-
-    <section class="section-step">
-        <h1>
-            Step 3 - Ingredientes
-        </h1>
-    </section>
-
-    <section class="section-step">
-        <h1>
-            Step 4 - Alergênicos
-        </h1>
-    </section>
-
-    <button class="prev-step">
-        Voltar
-    </button>
-    <button class="next-step">
-        Avançar
-    </button>
-
-    </button>
-    <script src="./js/steps.js">
-    </script>
-    <script src="./js/document.js">
-    </script>
+        </section>
+        <section class="section-step">
+            <h3>
+                Receita
+            </h3>
+            <select name="ingredients" id="ingredients-select">
+            </select>
+            <button id="add-ingredient">
+                Adicionar Ingrediente
+            </button>
+            <ul id="ingredient-list">
+            </ul>
+        </section>
+        <section class="section-step">
+            <h3>
+                Ingredientes
+            </h3>
+        </section>
+        <section class="section-step">
+            <h3>
+                Alergênicos
+            </h3>
+        </section>
+        <button class="prev-step">
+            Voltar
+        </button>
+        <button class="next-step">
+            Avançar
+        </button>
+        </button>
+        <script src="./js/steps.js">
+        </script>
+        <script src="./js/document.js">
+        </script>
+    </main>
 </body>
 
 </html>

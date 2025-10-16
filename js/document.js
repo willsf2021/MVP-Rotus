@@ -1,5 +1,49 @@
-// const inputArea = document.getElementById('inputArea');
-// const toggleMode = document.getElementById('toggleMode');
+const inputArea = document.getElementById('inputArea');
+const toggleMode = document.getElementById('toggleMode');
+const selectIngredientsHTML = document.querySelector("#ingredients-select");
+const addIngredientHTML = document.querySelector("#add-ingredient");
+const ingredientList = document.querySelector("#ingredient-list");
+
+const INGREDIENTS = [
+    { id: 1, name: "Batata" },
+    { id: 2, name: "Carne moída" },
+    { id: 3, name: "Arroz" },
+    { id: 4, name: "Feijão" },
+]
+
+// Preenche os ingredientes no Select
+
+bindIngredients(INGREDIENTS);
+
+function bindIngredients(ingredients) {
+    ingredients.forEach(ingredient => {
+        let optionHTML = document.createElement('option')
+        optionHTML.value = ingredient.id;
+        optionHTML.innerHTML = `${ingredient.name}`
+
+        selectIngredientsHTML.appendChild(optionHTML);
+    });
+}
+
+
+
+function selectIngredients(ingredient_id) {
+
+    let ingredient = INGREDIENTS.find(
+        ingredient => ingredient.id == ingredient_id
+    );
+
+    data.ingredientes.push(ingredient)
+    renderIngredients(ingredient)
+}
+
+function renderIngredients(ingredient) {
+    let liHTML = document.createElement('li')
+    liHTML.innerHTML = `
+        ${ingredient.name}
+    `
+    ingredientList.appendChild(liHTML)
+}
 
 let data = {
     // Step 1 - Cliente
@@ -39,20 +83,17 @@ class Ingrediente {
     }
 }
 
-let ingrediente1 = new Ingrediente(100, 80, 0.2);
-console.log(ingrediente1)
-
 
 
 const templates = {
     search: `
         <label>
-            Buscar Cliente <small>(Opcional)</small>
+        Buscar Cliente <small>(Opcional)</small>
             <input type="search" placeholder="Digite o nome do cliente">
         </label>
     `,
     add: `
-        <label>
+    <label>
             Nome Completo <small></small>
             <input type="text" placeholder="João da Silva">
         </label>
@@ -68,6 +109,10 @@ const templates = {
     `
 };
 
-// toggleMode.addEventListener('change', () => {
-//     inputArea.innerHTML = toggleMode.checked ? templates.add : templates.search;
-// });
+toggleMode.addEventListener('change', () => {
+    inputArea.innerHTML = toggleMode.checked ? templates.add : templates.search;
+});
+
+addIngredientHTML.addEventListener('click', () => {
+    selectIngredients(selectIngredientsHTML.value)
+})

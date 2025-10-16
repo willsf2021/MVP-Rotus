@@ -1,6 +1,29 @@
 const inputArea = document.getElementById('inputArea');
 const toggleMode = document.getElementById('toggleMode');
 
+let data = {
+    // Step 1 - Cliente
+    has_client: false,
+    client_id: null,
+
+    // Step 2 - Receita
+    nome_receita: '',
+    categoria: '',
+    tempo_preparo: '',
+    porcao: '',
+    unidade_medida: '',
+    modo_preparo: '',
+
+    // Step 3 - Ingredientes
+    ingredientes: [],
+
+    // Step 4 - Alergênicos
+    alergenicos: ''
+}
+
+// TODO: Classe que representa o ingrediente
+
+
 const templates = {
     search: `
         <label>

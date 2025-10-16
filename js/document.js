@@ -1,5 +1,5 @@
-const inputArea = document.getElementById('inputArea');
-const toggleMode = document.getElementById('toggleMode');
+// const inputArea = document.getElementById('inputArea');
+// const toggleMode = document.getElementById('toggleMode');
 
 let data = {
     // Step 1 - Cliente
@@ -22,6 +22,26 @@ let data = {
 }
 
 // TODO: Classe que representa o ingrediente
+
+class Ingrediente {
+    peso_bruto;
+    peso_liquido;
+    peso_cozido;
+
+    constructor(peso_bruto, peso_liquido, fator_coccao) {
+        this.peso_liquido = peso_liquido;
+        this.peso_bruto = peso_bruto;
+        this.calcularCoccao(fator_coccao);
+    }
+
+    calcularCoccao(fator_coccao) {
+        this.peso_cozido = this.peso_liquido * (1 + fator_coccao);
+    }
+}
+
+let ingrediente1 = new Ingrediente(100, 80, 0.2);
+console.log(ingrediente1)
+
 
 
 const templates = {
@@ -48,6 +68,6 @@ const templates = {
     `
 };
 
-toggleMode.addEventListener('change', () => {
-    inputArea.innerHTML = toggleMode.checked ? templates.add : templates.search;
-});
+// toggleMode.addEventListener('change', () => {
+//     inputArea.innerHTML = toggleMode.checked ? templates.add : templates.search;
+// });

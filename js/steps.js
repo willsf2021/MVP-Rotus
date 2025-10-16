@@ -6,10 +6,10 @@ const stepSections = document.querySelectorAll('.section-step');
 const buttonNext = document.querySelector('.next-step');
 const buttonPrev = document.querySelector('.prev-step');
 
+
 let stepNumber = localStorage.getItem('currentStep')
     ? parseInt(localStorage.getItem('currentStep'))
     : 0;
-
 
 init();
 
@@ -18,32 +18,25 @@ function init() {
     managePrevButton();
 }
 
-stepContainers.forEach((container, idx) => {
-    container.addEventListener('click', () => changeStep(idx));
-});
-
-
-
-buttonNext.addEventListener('click', () => {
-    if (stepNumber < stepSections.length - 1) {
-        changeStep(stepNumber + 1);
-        managePrevButton();
-    }
-})
-
-buttonPrev.addEventListener('click', () => {
-    if (stepNumber > 0) {
-        changeStep(stepNumber - 1);
-        managePrevButton();
-    }
-})
-
-
 function managePrevButton() {
     if (stepNumber === 0) {
         buttonPrev.classList.add('prev-step_hidden');
     } else {
         buttonPrev.classList.remove('prev-step_hidden');
+    }
+}
+
+function nextStep() {
+    if (stepNumber < stepSections.length - 1) {
+        changeStep(stepNumber + 1);
+        managePrevButton();
+    }
+}
+
+function prevStep() {
+    if (stepNumber > 0) {
+        changeStep(stepNumber - 1);
+        managePrevButton();
     }
 }
 
@@ -59,7 +52,17 @@ function changeStep(index) {
     if (stepSections[index]) stepSections[index].classList.add('section-active');
 
     localStorage.setItem('currentStep', stepNumber);
+    managePrevButton();
 }
+
+// Listeners
+
+stepContainers.forEach((container, idx) => {
+    container.addEventListener('click', () => changeStep(idx));
+});
+
+buttonNext.addEventListener('click', nextStep)
+buttonPrev.addEventListener('click', prevStep)
 
 // Fim Lógica de Steps
 

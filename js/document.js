@@ -21,6 +21,7 @@ const templates = {
             Email <small></small>
             <input type="text" placeholder="(11) 9 9999-9999">
         </label>
+        <button type="button">Cadastrar Cliente</button>
     `
 };
 

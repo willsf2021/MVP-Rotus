@@ -1,6 +1,8 @@
 :root {
     --primary-color: #3EA896;
     --text-color: #444444;
+    --text-color-muted: #999999;
+    --text-color-selected: #181818;
     --white: #fff;
     --gray: #AAAAAA;
     --gray-button: #3f3f3f;

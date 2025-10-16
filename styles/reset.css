@@ -8,3 +8,8 @@ body {
     font-family: 'Inter';
     color: var(--text-color);
 }
+
+
+ul li {
+    list-style: none;
+}

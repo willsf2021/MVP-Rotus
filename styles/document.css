@@ -1,8 +1,13 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+}
 main {
     padding: 0px 24px;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    flex: 1;
     padding-bottom: 24px;
 }
 

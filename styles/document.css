@@ -1,3 +1,37 @@
+main {
+    padding: 0px 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding-bottom: 24px;
+}
+
+.control-buttons {
+    flex: 1;
+    display: flex;
+    gap: 32px;
+    align-items: flex-end;
+}
+
+.container-control-button {
+    flex: 1;
+}
+
+.container-control-button button {
+    height: 56px !important;
+    width: 100%;
+}
+
+#prev-step {
+    background: var(--white);
+    border: 1px solid var(--primary-color);
+    color: var(--text-color);
+}
+
+#prev-step:hover {
+    /* TODO: a definir */
+}
+
 .container-steps {
     margin: 0px auto 40px auto;
     width: fit-content;
@@ -134,9 +168,6 @@ i {
     margin-bottom: 56px;
 }
 
-main {
-    padding: 0px 24px;
-}
 
 .input-form {
     display: flex;
@@ -163,7 +194,10 @@ main {
     margin-left: 4px;
 }
 
-.submit-button {
+
+
+.submit-button,
+.container-control-button button {
     background: linear-gradient(to bottom, var(--primary-color-lighter), var(--primary-color));
     border: none;
     color: var(--white);
@@ -171,12 +205,13 @@ main {
     font: inherit;
     font-weight: 400;
     height: 48px;
-    border-radius: 10px;
+    border-radius: 40px;
     transition: all 300ms ease-in-out;
     margin-top: 16px;
 }
 
-.submit-button:hover {
+.submit-button:hover,
+.container-control-button button:hover {
     background: linear-gradient(to bottom, var(--primary-color-lighter-hover), var(--primary-color-hover));
 }
 

@@ -26,6 +26,14 @@ function managePrevButton() {
     }
 }
 
+function manageNextButton() {
+    if (stepNumber === 0) {
+        buttonPrev.classList.add('prev-step_hidden');
+    } else {
+        buttonPrev.classList.remove('prev-step_hidden');
+    }
+}
+
 function nextStep() {
     if (stepNumber < stepSections.length - 1) {
         changeStep(stepNumber + 1);

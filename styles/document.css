@@ -149,13 +149,35 @@ main {
     width: 100%;
 }
 
-.input-area {
-    
+.inputs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px 0;
 }
 
+.inputs-container {
+    gap: 16px 0;
+}
 
 .input-form span {
     margin-left: 4px;
+}
+
+.submit-button {
+    background: linear-gradient(to bottom, var(--primary-color-lighter), var(--primary-color));
+    border: none;
+    color: var(--white);
+    font-size: 16px;
+    font: inherit;
+    font-weight: 400;
+    height: 48px;
+    border-radius: 10px;
+    transition: all 300ms ease-in-out;
+    margin-top: 16px;
+}
+
+.submit-button:hover {
+    background: linear-gradient(to bottom, var(--primary-color-lighter-hover), var(--primary-color-hover));
 }
 
 input[type="text"] {
@@ -182,9 +204,11 @@ input[type="text"]:active {
     transition: all 200ms ease-in-out;
 }
 
-.section-step-1 {
-
+.required-field {
+    color: red;
+    font-weight: 600;
 }
+
 
 
 

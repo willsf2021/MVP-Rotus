@@ -4,15 +4,17 @@ const selectIngredientsHTML = document.querySelector("#ingredients-select");
 const addIngredientHTML = document.querySelector("#add-ingredient");
 const ingredientList = document.querySelector("#ingredient-list");
 
+// Simulam os ingredientes vindos do Backend
+// Mockup
 const INGREDIENTS = [
     { id: 1, name: "Batata" },
     { id: 2, name: "Carne moída" },
     { id: 3, name: "Arroz" },
     { id: 4, name: "Feijão" },
+    { id: 5, name: "Alface" },
 ]
 
 // Preenche os ingredientes no Select
-
 bindIngredients(INGREDIENTS);
 
 function bindIngredients(ingredients) {
@@ -24,7 +26,6 @@ function bindIngredients(ingredients) {
         selectIngredientsHTML.appendChild(optionHTML);
     });
 }
-
 
 
 function selectIngredients(ingredient_id) {
@@ -44,6 +45,8 @@ function renderIngredients(ingredient) {
     `
     ingredientList.appendChild(liHTML)
 }
+
+
 
 let data = {
     // Step 1 - Cliente
@@ -84,35 +87,91 @@ class Ingrediente {
 }
 
 
-
 const templates = {
     search: `
-        <label>
-        Buscar Cliente <small>(Opcional)</small>
-            <input type="search" placeholder="Digite o nome do cliente">
+        <label class="input-form">
+            <span>Cliente <small>(Opcional)</small></span>
+            <input type="text" placeholder="Digite o nome do cliente..." id="client-name">
         </label>
     `,
     add: `
-    <label>
-            Nome Completo <small></small>
-            <input type="text" placeholder="João da Silva">
+        <label class="input-form">
+                <span>Nome Completo <span class="required-field"> *</span></span>
+                <input type="text" placeholder="João da Silva" id="complete-name">
         </label>
-        <label>
-            CPF <small></small>
-            <input type="text" placeholder="111.222.333-44">
+        <label class="input-form">
+                <span>CPF<span class="required-field"> *</span></span>
+                <input type="text" placeholder="111.222.333-44" id="cpf">
         </label>
-        <label>
-            Email <small></small>
-            <input type="text" placeholder="(11) 9 9999-9999">
+        <label class="input-form">
+                <span>Celular<small>(Opcional)</small></span>
+                <input type="text" placeholder="(11) 9 9999-9999" id="telephone-number">
         </label>
-        <button type="button">Cadastrar Cliente</button>
+         <button class="submit-button" type="button">Cadastrar Cliente</button>
     `
 };
 
-toggleMode.addEventListener('change', () => {
-    inputArea.innerHTML = toggleMode.checked ? templates.add : templates.search;
-});
+
+
+
+
+async function handleToggleMode() {
+    inputArea.innerHTML = await toggleMode.checked ? templates.add : templates.search;
+    
+    if (toggleMode.checked) {
+        document.querySelector(".submit-button").addEventListener('click', registerClient)
+    }
+}
+
+async function registerClient() {
+
+    const inputNomeCompleto = document.querySelector("#complete-name")
+    const inputCpf = document.querySelector("#cpf")
+    const inputCelular = document.querySelector("#telephone-number")
+
+    let isNotValidFields = validateData([inputNomeCompleto.value, inputCpf.value])
+
+    if (!isNotValidFields) {
+
+        toggleMode.checked = false;
+        await handleToggleMode();
+
+        let clientInput = document.querySelector("#client-name")
+        clientInput.value = inputNomeCompleto.value;
+
+    } else {
+
+        return;
+
+    }
+}
+
+function validateData(data = []) {
+    let getOut = false;
+
+    if (data.length == 0) {
+        console.error("Dados para validação não informados")
+        return;
+    }
+
+    data.map((content) => {
+        if (content == '') {
+            getOut = true;
+        };
+    })
+
+    if (!getOut) {
+        alert("Cliente registrado com sucesso!")
+    } else {
+        alert("Preencha todos os dados obrigatórios!")
+    }
+
+    return getOut;
+}
+
 
 addIngredientHTML.addEventListener('click', () => {
     selectIngredients(selectIngredientsHTML.value)
 })
+
+toggleMode.addEventListener('change', handleToggleMode);

@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="./styles/global.css">
     <link rel="stylesheet" href="./styles/variables.css">
     <link rel="stylesheet" href="./styles/document.css">
+    <link rel="stylesheet" href="./styles/custom_select.css">
+
 
     <title>Novo Documento | Rótus</title>
 
@@ -72,9 +74,6 @@
 
     <main>
         <section class="section-step section-active section-step-1">
-            <h3>
-                Cliente
-            </h3>
             <div class="container">
                 <div class="switch-wrapper">
                     <span class="switch-label"><i class="bi bi-person-fill-check"></i>Modo Cadastro</span>
@@ -92,28 +91,46 @@
             </div>
         </section>
         <section class="section-step">
-            <h3>
-                Receita
-            </h3>
-            <select name="ingredients" id="ingredients-select">
-            </select>
+        </section>
+        <section class="section-step">
+            <div class="switch-wrapper">
+                    <span class="switch-label"><i class="bi bi-coin"></i>Inserir Precificação</span>
+                    <label class="switch">
+                        <input type="checkbox" id="toggleModePrecificacao">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            <label for="" class="input-form">
+                    <span>Ingredientes</span>
+            <div id="select-with-search"></div></label>
+            <div id="inputs-container-ingredients">
+                <label for="" class="input-form">
+                    <span>Peso Bruto</span>
+                    <input type="text" placeholder="Ex: 500g">
+                </label>
+                <label for="" class="input-form">
+                    <span>Peso Líquido</span>
+                    <input type="text" placeholder="Ex: 400g">
+                </label>
+                <label for="" class="input-form">
+                    <span>Peso cozido</span>
+                    <input type="text" placeholder="Ex: 300g">
+                </label>
+            </div>
             <button id="add-ingredient">
-                Adicionar Ingrediente
+                Adicionar na lista
             </button>
             <ul id="ingredient-list">
             </ul>
         </section>
         <section class="section-step">
-            <h3>
-                Ingredientes
-            </h3>
-        </section>
-        <section class="section-step">
-            <h3>
-                Alergênicos
-            </h3>
         </section>
         <div class="control-buttons">
+            <div class="container-control-home">
+                <button>
+                    <i class="bi bi-houses-fill"></i>
+                </button>
+            </div>
             <div class="container-control-button">
                 <button class="prev-step" id="prev-step">
                     Voltar
@@ -126,11 +143,13 @@
             </div>
         </div>
         </button>
+    </main>
+    <script src="./js/custom_select.js"></script>
         <script src="./js/steps.js">
         </script>
+            <script src="./js/virtual-select.min.js"></script>
         <script src="./js/document.js">
         </script>
-    </main>
 </body>
 
 </html>

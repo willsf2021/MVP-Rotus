@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Customizado</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            padding: 40px;
+            background: #f5f5f5;
+        }
+
+        .demo-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .demo-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .demo-section h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Custom Select Styles */
+        .custom-select {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .select-header {
+            background: white;
+            border: 2px solid #AAAAAA;
+            border-radius: 8px;
+            padding: 12px 16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: all 0.2s;
+        }
+
+        .select-header:hover {
+            border-color: #999999;
+        }
+
+        .select-header.active {
+            border-color: #3EA896;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .select-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .select-value {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .select-chevron {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.2s;
+        }
+
+        .select-chevron.rotated {
+            transform: rotate(180deg);
+        }
+
+        .select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #3EA896;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .select-dropdown.open {
+            max-height: 300px;
+            opacity: 1;
+            overflow-y: auto;
+        }
+
+        .select-search {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1;
+        }
+
+        .select-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .select-search input:focus {
+            border-color: #3EA896;
+        }
+
+        .select-options {
+            padding: 8px 0;
+        }
+
+        .select-option {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .select-option:hover {
+            background: #f3f4f6;
+        }
+
+        .select-option.selected {
+            background: #E8F5F2;
+            color: #3EA896;
+            font-weight: 500;
+        }
+
+        .select-option.hidden {
+            display: none;
+        }
+
+        .no-results {
+            padding: 20px;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        /* Scrollbar personalizada */
+        .select-dropdown::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .select-dropdown::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .select-dropdown::-webkit-scrollbar-thumb {
+            background: #3EA896;
+            border-radius: 4px;
+        }
+
+        .select-dropdown::-webkit-scrollbar-thumb:hover {
+            background: #35968A;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-section">
+            <h2>Select com Busca</h2>
+            <div id="select-with-search"></div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Select Simples (Sem Busca)</h2>
+            <div id="select-simple"></div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Outro Exemplo - Medidas</h2>
+            <div id="select-medidas"></div>
+        </div>
+    </div>
+
+    <script>
+        class CustomSelect {
+            constructor(container, options = {}) {
+                this.container = typeof container === 'string' ? document.querySelector(container) : container;
+                this.options = {
+                    label: options.label || 'Selecione',
+                    items: options.items || [],
+                    searchable: options.searchable !== undefined ? options.searchable : true,
+                    placeholder: options.placeholder || 'Buscar...',
+                    defaultValue: options.defaultValue || null,
+                    onChange: options.onChange || (() => {})
+                };
+                
+                this.selectedValue = this.options.defaultValue;
+                this.isOpen = false;
+                
+                this.init();
+            }
+
+            init() {
+                this.render();
+                this.bindEvents();
+                this.sortItems();
+            }
+
+            sortItems() {
+                this.options.items.sort((a, b) => a.label.localeCompare(b.label, 'pt-BR'));
+            }
+
+            render() {
+                const selectedItem = this.options.items.find(item => item.value === this.selectedValue);
+                const displayText = selectedItem ? selectedItem.label : this.options.label;
+
+                this.container.innerHTML = `
+                    <div class="custom-select">
+                        <div class="select-header">
+                            <div>
+                                ${!selectedItem ? `<div class="select-label">${this.options.label}</div>` : ''}
+                                ${selectedItem ? `<div class="select-value">${displayText}</div>` : ''}
+                            </div>
+                            <svg class="select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="select-dropdown">
+                            ${this.options.searchable ? `
+                                <div class="select-search">
+                                    <input type="text" placeholder="${this.options.placeholder}">
+                                </div>
+                            ` : ''}
+                            <div class="select-options">
+                                ${this.options.items.map(item => `
+                                    <div class="select-option ${item.value === this.selectedValue ? 'selected' : ''}" 
+                                         data-value="${item.value}">
+                                        ${item.label}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                this.header = this.container.querySelector('.select-header');
+                this.dropdown = this.container.querySelector('.select-dropdown');
+                this.chevron = this.container.querySelector('.select-chevron');
+                this.optionElements = this.container.querySelectorAll('.select-option');
+                this.searchInput = this.container.querySelector('.select-search input');
+            }
+
+            bindEvents() {
+                // Toggle dropdown
+                this.header.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.toggle();
+                });
+
+                // Select option
+                this.optionElements.forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const value = option.dataset.value;
+                        this.select(value);
+                    });
+                });
+
+                // Search functionality
+                if (this.searchInput) {
+                    this.searchInput.addEventListener('input', (e) => {
+                        this.filter(e.target.value);
+                    });
+
+                    this.searchInput.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                }
+
+                // Close on outside click
+                document.addEventListener('click', (e) => {
+                    if (!this.container.contains(e.target)) {
+                        this.close();
+                    }
+                });
+
+                // Close on escape
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && this.isOpen) {
+                        this.close();
+                    }
+                });
+            }
+
+            toggle() {
+                this.isOpen ? this.close() : this.open();
+            }
+
+            open() {
+                this.isOpen = true;
+                this.dropdown.classList.add('open');
+                this.header.classList.add('active');
+                this.chevron.classList.add('rotated');
+                
+                if (this.searchInput) {
+                    setTimeout(() => this.searchInput.focus(), 100);
+                }
+            }
+
+            close() {
+                this.isOpen = false;
+                this.dropdown.classList.remove('open');
+                this.header.classList.remove('active');
+                this.chevron.classList.remove('rotated');
+                
+                if (this.searchInput) {
+                    this.searchInput.value = '';
+                    this.filter('');
+                }
+            }
+
+            select(value) {
+                this.selectedValue = value;
+                const selectedItem = this.options.items.find(item => item.value === value);
+                
+                // Update UI
+                this.optionElements.forEach(opt => {
+                    opt.classList.toggle('selected', opt.dataset.value === value);
+                });
+
+                // Update header
+                const headerContent = this.header.querySelector('div');
+                if (selectedItem) {
+                    headerContent.innerHTML = `<div class="select-value">${selectedItem.label}</div>`;
+                }
+
+                this.close();
+                this.options.onChange(value, selectedItem);
+            }
+
+            filter(searchTerm) {
+                const term = searchTerm.toLowerCase().trim();
+                let visibleCount = 0;
+
+                this.optionElements.forEach(option => {
+                    const text = option.textContent.toLowerCase();
+                    const matches = text.includes(term);
+                    option.classList.toggle('hidden', !matches);
+                    if (matches) visibleCount++;
+                });
+
+                // Show/hide no results message
+                let noResults = this.container.querySelector('.no-results');
+                if (visibleCount === 0 && !noResults) {
+                    noResults = document.createElement('div');
+                    noResults.className = 'no-results';
+                    noResults.textContent = 'Nenhum resultado encontrado';
+                    this.container.querySelector('.select-options').appendChild(noResults);
+                } else if (visibleCount > 0 && noResults) {
+                    noResults.remove();
+                }
+            }
+
+            getValue() {
+                return this.selectedValue;
+            }
+
+            setValue(value) {
+                this.select(value);
+            }
+        }
+
+        // Exemplos de uso
+        const selectWithSearch = new CustomSelect('#select-with-search', {
+            label: 'Selecione um país',
+            searchable: true,
+            placeholder: 'Digite para buscar...',
+            items: [
+                { value: 'br', label: 'Brasil' },
+                { value: 'us', label: 'Estados Unidos' },
+                { value: 'pt', label: 'Portugal' },
+                { value: 'es', label: 'Espanha' },
+                { value: 'fr', label: 'França' },
+                { value: 'it', label: 'Itália' },
+                { value: 'de', label: 'Alemanha' },
+                { value: 'uk', label: 'Reino Unido' },
+                { value: 'jp', label: 'Japão' },
+                { value: 'cn', label: 'China' }
+            ],
+            onChange: (value, item) => {
+                console.log('Selecionado:', value, item);
+            }
+        });
+
+        const selectSimple = new CustomSelect('#select-simple', {
+            label: 'Escolha uma opção',
+            searchable: false,
+            items: [
+                { value: '1', label: 'Opção 1' },
+                { value: '2', label: 'Opção 2' },
+                { value: '3', label: 'Opção 3' },
+                { value: '4', label: 'Opção 4' },
+                { value: '5', label: 'Opção 5' }
+            ],
+            onChange: (value, item) => {
+                console.log('Simples selecionado:', value, item);
+            }
+        });
+
+        const selectMedidas = new CustomSelect('#select-medidas', {
+            label: 'Medida',
+            searchable: true,
+            placeholder: 'Buscar medida...',
+            items: [
+                { value: 'g', label: 'Gramas(g)' },
+                { value: 'ml', label: 'Mililitros(ml)' },
+                { value: 'kg', label: 'Quilogramas(kg)' },
+                { value: 'l', label: 'Litros(l)' },
+                { value: 'mg', label: 'Miligramas(mg)' },
+                { value: 'oz', label: 'Onças(oz)' },
+                { value: 'lb', label: 'Libras(lb)' },
+                { value: 'un', label: 'Unidades(un)' }
+            ],
+            onChange: (value, item) => {
+                console.log('Medida selecionada:', value, item);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+body {
+    background-position: cover;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: hidden;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 24px 24px 24px;
+    color: var(--text-color);
+    width: 100%;
+}
+
+header i {
+    font-size: 32px;
+}
+
+
+#back-container{
+    --text-color: #444444;
+}
+
+
+.avatar-container {
+    padding-right: 80px;
+}
+
+.avatar-container i {
+    font-size: 50px;
+}
+
+main {
+    width: auto;
+    flex: 1;
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    padding: 24px 24px;
+    height: 100dvh;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:focus {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+/*--------------------------*/
+footer{
+    padding: 24px;
+}
+
+footer button.submit-button-white{
+    
+    border-color: var(--primary-color);
+    color: var(--text-color);
+    font-size: 16px;
+    font: inherit;
+    font-weight: 400;
+    height: 48px;
+    transition: all 300ms ease-in-out;
+    width: 100%;
+    border-radius: 100px;
+}

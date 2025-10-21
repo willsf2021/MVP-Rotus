@@ -444,3 +444,12 @@ input:checked + .slider::before {
   color: var(--text-color);
   font-weight: 600;
 }
+
+#inputs-container-pricing {
+  display: flex;
+  gap: 0 8px;
+  margin-top: 16px;
+}
+
+#inputs-container-pricing label span {
+font-size: 10px;}

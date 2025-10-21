@@ -3,9 +3,27 @@ const toggleMode = document.getElementById("toggleMode");
 const selectIngredientsHTML = document.querySelector("#select-with-search");
 const addIngredientHTML = document.querySelector("#add-ingredient");
 const ingredientList = document.querySelector("#ingredient-list");
+const togglePrecificacao = document.getElementById("toggleModePrecificacao");
+const pricingContainer = document.getElementById("inputs-container-pricing");
 
-// Simulam os ingredientes vindos do Backend
-// Mockup
+// Adicione essa função para controlar a exibição dos campos de precificação
+togglePrecificacao.addEventListener("change", function () {
+  if (this.checked) {
+    pricingContainer.style.display = "flex";
+  } else {
+    pricingContainer.style.display = "none";
+    // Limpa os inputs de precificação quando desmarcar
+    document.getElementById("quantidade-embalagem").value = "";
+    document.getElementById("custo-embalagem").value = "";
+
+    // Remove dados de precificação dos ingredientes já adicionados
+    data.ingredientes.forEach((ing) => {
+      delete ing.quantidadeEmbalagem;
+      delete ing.custoEmbalagem;
+    });
+  }
+});
+
 const INGREDIENTS = [
   { value: "1", label: "Arroz branco cozido" },
   { value: "2", label: "Feijão carioca cozido" },
@@ -32,48 +50,137 @@ function selectIngredients(ingredient_id) {
     (ingredient) => ingredient.value == ingredient_id
   );
 
-  // Pega os valores dos inputs - SELETORES CORRETOS baseados no SEU HTML
-  const inputs = document.querySelectorAll('#inputs-container-ingredients input[type="text"]');
-  const pesoBruto = inputs[0].value;
-  const pesoLiquido = inputs[1].value;
-  const pesoCozido = inputs[2].value;
+  // Pega os valores dos inputs
+  const inputs = document.querySelectorAll(
+    '#inputs-container-ingredients input[type="text"]'
+  );
+  const pesoBruto = inputs[0].value.trim();
+  const pesoLiquido = inputs[1].value.trim();
+  const pesoCozido = inputs[2].value.trim();
 
-  data.ingredientes.push({
+  // Validação: campos obrigatórios
+  if (!pesoBruto || !pesoLiquido || !pesoCozido) {
+    alert("Por favor, preencha todos os campos de peso!");
+    return;
+  }
+
+  // Validação: peso líquido não pode ser maior que bruto
+  const valorBruto = parseFloat(pesoBruto.replace(/\D/g, ""));
+  const valorLiquido = parseFloat(pesoLiquido.replace(/\D/g, ""));
+
+  if (valorLiquido > valorBruto) {
+    alert("O peso líquido não pode ser maior que o peso bruto!");
+    inputs[1].focus();
+    return;
+  }
+
+  // Dados do ingrediente
+  const ingredienteData = {
     ...ingredient,
     pesoBruto,
     pesoLiquido,
-    pesoCozido
-  });
-  
-  renderIngredients(ingredient, pesoBruto, pesoLiquido, pesoCozido);
-  
-  // Limpa os inputs após adicionar
-  inputs.forEach(input => input.value = '');
-  
-  // Reseta o select (opcional)
+    pesoCozido,
+  };
+
+  // Se precificação estiver ativa, adiciona os dados
+  if (togglePrecificacao.checked) {
+    const quantidadeEmbalagem = document
+      .getElementById("quantidade-embalagem")
+      .value.trim();
+    const custoEmbalagem = document
+      .getElementById("custo-embalagem")
+      .value.trim();
+
+    if (!quantidadeEmbalagem || !custoEmbalagem) {
+      alert("Por favor, preencha os dados de precificação!");
+      return;
+    }
+
+    ingredienteData.quantidadeEmbalagem = quantidadeEmbalagem;
+    ingredienteData.custoEmbalagem = custoEmbalagem;
+  }
+
+  data.ingredientes.push(ingredienteData);
+  renderIngredients(
+    ingredient,
+    pesoBruto,
+    pesoLiquido,
+    pesoCozido,
+    ingredienteData.quantidadeEmbalagem,
+    ingredienteData.custoEmbalagem
+  );
+
+  // Limpa TODOS os inputs após adicionar
+  inputs.forEach((input) => (input.value = ""));
+
+  // Limpa os inputs de precificação se estiverem visíveis
+  if (togglePrecificacao.checked) {
+    document.getElementById("quantidade-embalagem").value = "";
+    document.getElementById("custo-embalagem").value = "";
+  }
+
+  // Reseta o select
   selectWithSearch.setValue(null);
 }
 
 function removeIngredient(ingredientId) {
   // Remove do array
   data.ingredientes = data.ingredientes.filter(
-    ing => ing.value !== ingredientId
+    (ing) => ing.value !== ingredientId
   );
-  
+
   // Remove do DOM
   const card = document.querySelector(`[data-id="${ingredientId}"]`);
   if (card) {
-    card.style.opacity = '0';
-    card.style.transform = 'translateX(-20px)';
+    card.style.opacity = "0";
+    card.style.transform = "translateX(-20px)";
     setTimeout(() => card.remove(), 200);
   }
 }
 
-function renderIngredients(ingredient, pesoBruto, pesoLiquido, pesoCozido) {
+// Atualize a função renderIngredients
+function renderIngredients(
+  ingredient,
+  pesoBruto,
+  pesoLiquido,
+  pesoCozido,
+  quantidadeEmbalagem,
+  custoEmbalagem
+) {
   let liHTML = document.createElement("li");
   liHTML.className = "ingredient-card";
   liHTML.dataset.id = ingredient.value;
-  
+
+  // HTML base do card
+  let weightsHTML = `
+    <div class="ingredient-weight-item">
+      <span class="weight-label">Peso Bruto</span>
+      <span class="weight-value">${pesoBruto || "-"}</span>
+    </div>
+    <div class="ingredient-weight-item">
+      <span class="weight-label">Peso Líquido</span>
+      <span class="weight-value">${pesoLiquido || "-"}</span>
+    </div>
+    <div class="ingredient-weight-item">
+      <span class="weight-label">Peso Cozido</span>
+      <span class="weight-value">${pesoCozido || "-"}</span>
+    </div>
+  `;
+
+  // Adiciona dados de precificação se existirem
+  if (quantidadeEmbalagem && custoEmbalagem) {
+    weightsHTML += `
+      <div class="ingredient-weight-item">
+        <span class="weight-label">Qtd. Embalagem</span>
+        <span class="weight-value">${quantidadeEmbalagem}</span>
+      </div>
+      <div class="ingredient-weight-item">
+        <span class="weight-label">Custo Embalagem</span>
+        <span class="weight-value">${custoEmbalagem}</span>
+      </div>
+    `;
+  }
+
   liHTML.innerHTML = `
     <div class="ingredient-header">
       <span class="ingredient-name">${ingredient.label}</span>
@@ -82,21 +189,10 @@ function renderIngredients(ingredient, pesoBruto, pesoLiquido, pesoCozido) {
       </button>
     </div>
     <div class="ingredient-weights">
-      <div class="ingredient-weight-item">
-        <span class="weight-label">Peso Bruto</span>
-        <span class="weight-value">${pesoBruto || '-'}</span>
-      </div>
-      <div class="ingredient-weight-item">
-        <span class="weight-label">Peso Líquido</span>
-        <span class="weight-value">${pesoLiquido || '-'}</span>
-      </div>
-      <div class="ingredient-weight-item">
-        <span class="weight-label">Peso Cozido</span>
-        <span class="weight-value">${pesoCozido || '-'}</span>
-      </div>
+      ${weightsHTML}
     </div>
   `;
-  
+
   ingredientList.appendChild(liHTML);
 }
 
